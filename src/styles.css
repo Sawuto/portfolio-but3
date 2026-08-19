@@ -1,0 +1,1156 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   PLAN DE LIGNES — système visuel
+   Monde : diagramme de réseau de transport, grammaire de Beck.
+   Six lignes = six compétences. Trois zones = trois niveaux du référentiel.
+   Une station = une mission. Une correspondance = une mission multicompétences.
+   Un terminus = le plafond du parcours RA.
+
+   Fond clair, choisi pour la scène d'usage : une soutenance projetée dans une
+   salle éclairée, où un fond sombre se délave.
+
+   UNE SEULE famille typographique. La version précédente en avait quatre, et
+   c'était une des causes de la densité.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* — Papier et zones tarifaires ————————————————————————— */
+  --papier: #f7f6f3;
+  --papier-creux: #efede8;
+  --blanc: #ffffff;
+  --zone-1: #eeece7;
+  --zone-2: #e2dfd8;
+  --zone-3: #d5d1c8;
+
+  /* — Encre ————————————————————————————————————————————— */
+  --encre: #16181c;
+  --encre-2: #4a4f57;
+  --encre-3: #656b73;
+  --filet: #cdc9c0;
+  --filet-fort: #a8a49a;
+
+  /* — Les six lignes ————————————————————————————————————
+     Vérifiées : chacune au-dessus de 5:1 sur le papier, et le blanc au-dessus
+     de 5,4:1 sur chacune pour le texte des pastilles. */
+  --l-c1: #c8102e;
+  --l-c2: #0057a8;
+  --l-c3: #00713c;
+  --l-c4: #9c5a00;
+  --l-c5: #6b2c91;
+  --l-c6: #00676f;
+
+  /* — Travaux : ce qui est engagé sans être acquis, et ce qui manque ——— */
+  --travaux: #8a4b00;
+  --travaux-clair: #f5ead9;
+
+  /* — Alerte dure : non-conformité au référentiel ————————————— */
+  --alerte-fond: #fdeef0;
+  --alerte-texte: #7d0a1c;
+
+  /* — Surfaces sombres : l'afficheur de prochain arrêt ——————————
+     Contrastes vérifiés sur --encre : prose 11:1, méta 7,95:1,
+     alerte 8,19:1, filet 3,3:1 (limite de composant, seuil 3:1). */
+  --sombre-prose: #c8ccd2;
+  --sombre-meta: #a8aeb6;
+  --sombre-filet: #646b75;
+  --sombre-alerte: #ff8f9f;
+  --sombre-jauge: #2c3037;
+  --sombre-jauge-faite: #8f959d;
+
+  /* — Familles ————————————————————————————————————————— */
+  --f: 'Barlow', system-ui, -apple-system, sans-serif;
+  --f-etroit: 'Barlow Semi Condensed', 'Barlow', system-ui, sans-serif;
+
+  /* — Mesures ————————————————————————————————————————— */
+  --mesure: 66ch;
+  --marge: clamp(1.25rem, 4vw, 4rem);
+  --sortie: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--f);
+  font-size: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Surfaces du navigateur ─────────────────────────────────────────────── */
+
+::selection {
+  background: var(--encre);
+  color: var(--papier);
+}
+
+:focus-visible {
+  outline: 3px solid var(--l-c2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+* {
+  caret-color: var(--l-c1);
+}
+
+@supports (scrollbar-color: red red) {
+  html {
+    scrollbar-color: var(--filet-fort) var(--papier-creux);
+    scrollbar-width: thin;
+  }
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--papier-creux);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--filet-fort);
+  border: 3px solid var(--papier-creux);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--encre-3);
+}
+
+a {
+  color: var(--l-c2);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  transition: color 0.16s var(--sortie);
+}
+a:hover {
+  color: var(--l-c1);
+}
+
+/* ── Typographie ────────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.12;
+  text-wrap: balance;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.titre-page {
+  font-family: var(--f-etroit);
+  font-size: clamp(1.75rem, 1.1rem + 3vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.titre-section {
+  font-family: var(--f-etroit);
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.25rem);
+  font-weight: 700;
+}
+
+/* Cartouche de signalétique : le petit libellé en capitales des panneaux. */
+.signal {
+  font-family: var(--f-etroit);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 0.72rem;
+  color: var(--encre-3);
+}
+
+.prose {
+  max-width: var(--mesure);
+  color: var(--encre-2);
+}
+.prose strong {
+  color: var(--encre);
+  font-weight: 600;
+}
+
+/* ── Pastille de ligne : la gélule des réseaux ──────────────────────────── */
+
+.pastille {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  height: 1.45rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: var(--ligne, var(--encre));
+  color: var(--blanc);
+  font-family: var(--f-etroit);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.pastille--grande {
+  min-width: 2.6rem;
+  height: 1.8rem;
+  font-size: 1rem;
+}
+
+/* ── Mise en page ───────────────────────────────────────────────────────── */
+
+.section {
+  padding: clamp(3rem, 6vw, 5.5rem) var(--marge);
+  border-top: 1px solid var(--filet);
+}
+.section > header {
+  margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+  max-width: var(--mesure);
+}
+.section > header p {
+  margin: 0.85rem 0 0;
+}
+
+/* ── Le réseau ──────────────────────────────────────────────────────────── */
+
+.reseau {
+  padding: 0 0 clamp(1rem, 2vw, 2rem);
+  border-top: 0;
+}
+
+.reseau-entete {
+  padding: clamp(2rem, 5vw, 3.5rem) var(--marge) clamp(1.25rem, 3vw, 2rem);
+  display: grid;
+  gap: 0.6rem;
+  max-width: 62rem;
+}
+
+.reseau-toile {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.reseau-toile text {
+  user-select: none;
+}
+
+.voie {
+  cursor: pointer;
+}
+.voie-cible {
+  fill: transparent;
+}
+.voie:focus-visible {
+  outline: none;
+}
+.voie:focus-visible .voie-cible {
+  fill: rgba(0, 87, 168, 0.09);
+}
+.voie:hover .voie-cible {
+  fill: rgba(22, 24, 28, 0.04);
+}
+
+.trace-ligne {
+  fill: none;
+  stroke-linecap: round;
+}
+/* Le tronçon possible mais non parcouru. */
+.trace-latente {
+  opacity: 0.16;
+}
+/* Le tronçon engagé sans être acquis : en travaux. */
+.trace-travaux {
+  stroke-dasharray: 3 9;
+  stroke-linecap: butt;
+  opacity: 0.78;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anime .trace-acquise {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: avancer 1.1s var(--sortie) forwards;
+  }
+  .anime .marqueur {
+    opacity: 0;
+    animation: poser 0.5s var(--sortie) forwards;
+  }
+  .correspondance {
+    stroke-dasharray: 700;
+    stroke-dashoffset: 700;
+    animation: avancer 0.5s var(--sortie) forwards;
+  }
+}
+@keyframes avancer {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes poser {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Légende ────────────────────────────────────────────────────────────── */
+
+.legende {
+  padding: 1rem var(--marge);
+  border-top: 1px solid var(--filet);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.75rem;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--encre-2);
+}
+.legende-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* ── Navigation ─────────────────────────────────────────────────────────── */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+  padding: 0.5rem var(--marge);
+  background: rgba(247, 246, 243, 0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--filet);
+}
+.nav a {
+  font-family: var(--f-etroit);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--encre-2);
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  transition: background 0.16s var(--sortie), color 0.16s var(--sortie);
+}
+.nav a:hover {
+  background: var(--papier-creux);
+  color: var(--encre);
+}
+.nav a[aria-current='true'] {
+  background: var(--encre);
+  color: var(--papier);
+}
+.nav-fin {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ── Boutons ────────────────────────────────────────────────────────────── */
+
+.bouton {
+  font-family: var(--f-etroit);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  background: var(--blanc);
+  border: 1.5px solid var(--filet-fort);
+  border-radius: 999px;
+  color: var(--encre);
+  cursor: pointer;
+  transition:
+    border-color 0.16s var(--sortie),
+    background 0.16s var(--sortie),
+    box-shadow 0.16s var(--sortie);
+}
+.bouton:hover {
+  border-color: var(--encre);
+  box-shadow: 0 2px 6px -2px rgba(22, 24, 28, 0.22);
+}
+.bouton--plein {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: var(--papier);
+}
+.bouton--plein:hover {
+  background: var(--l-c2);
+  border-color: var(--l-c2);
+}
+.bouton[aria-pressed='true'] {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: var(--papier);
+}
+.bouton:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  box-shadow: none;
+  border-color: var(--filet);
+}
+
+.touche {
+  font-family: var(--f-etroit);
+  font-weight: 600;
+  font-size: 0.72rem;
+  border: 1.5px solid var(--filet-fort);
+  border-radius: 4px;
+  padding: 0.05rem 0.32rem;
+  color: var(--encre-2);
+  background: var(--blanc);
+}
+
+/* ── Dépli : ce qui doit exister sans encombrer ─────────────────────────── */
+
+details {
+  border-top: 1px solid var(--filet);
+}
+details > summary {
+  cursor: pointer;
+  padding: 0.9rem 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::after {
+  content: '';
+  margin-left: auto;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--encre-3);
+  border-bottom: 2px solid var(--encre-3);
+  transform: rotate(45deg);
+  transition: transform 0.2s var(--sortie);
+  flex: 0 0 auto;
+}
+details[open] > summary::after {
+  transform: rotate(-135deg);
+}
+details > summary:hover::after {
+  border-color: var(--encre);
+}
+.depli-corps {
+  padding: 0 0 1.5rem;
+}
+
+.sous-titre-depli {
+  font-family: var(--f-etroit);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--encre-3);
+  margin: 1.5rem 0 0.5rem;
+}
+
+/* ── Fiche de ligne ─────────────────────────────────────────────────────── */
+
+.ligne-tete {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.ligne-nom {
+  font-family: var(--f-etroit);
+  font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+  font-weight: 700;
+}
+.ligne-etat {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--f-etroit);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--encre-2);
+  white-space: nowrap;
+}
+
+/* ── Station ────────────────────────────────────────────────────────────── */
+
+.station-tete {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.station-code {
+  font-family: var(--f-etroit);
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1.5px solid var(--encre);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  flex: 0 0 auto;
+}
+.station-nom {
+  font-family: var(--f-etroit);
+  font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+  font-weight: 700;
+}
+.station-meta {
+  font-size: 0.82rem;
+  color: var(--encre-3);
+}
+
+.desserte {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+/* ── Listes d'apprentissages critiques ──────────────────────────────────── */
+
+.ac-liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  max-width: var(--mesure);
+}
+.ac-liste li {
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--encre-2);
+  line-height: 1.5;
+}
+/* Le point d'arrêt : un rond blanc cerclé, comme sur un plan de ligne. */
+.ac-liste li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--blanc);
+  border: 2px solid var(--ligne, var(--encre-3));
+}
+.ac-liste li[data-mobilise='true'] {
+  color: var(--encre);
+}
+.ac-liste li[data-mobilise='true']::before {
+  background: var(--ligne, var(--encre));
+}
+.ac-liste li[data-inconnu='true'] {
+  color: var(--travaux);
+}
+.ac-liste li[data-inconnu='true']::before {
+  border-color: var(--travaux);
+  background: var(--travaux-clair);
+}
+
+/* ── Trace / preuve ─────────────────────────────────────────────────────── */
+
+.trace {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--filet);
+  max-width: var(--mesure);
+}
+.trace-demontre {
+  color: var(--encre-2);
+  font-style: italic;
+}
+
+/* ── En travaux : les champs à compléter, discrets ──────────────────────── */
+
+.travaux {
+  color: var(--travaux);
+  text-decoration: underline dotted var(--travaux);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1.5px;
+  font-style: italic;
+}
+/* Le suffixe n'apparaît que sur les champs de prose. Sur un champ inline
+   (un nom, une date, un lieu), le pointillé suffit : répété vingt fois, le
+   suffixe devenait du bruit. */
+.travaux--discret::after {
+  content: none;
+}
+.travaux::after {
+  content: ' · à compléter';
+  font-family: var(--f-etroit);
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.68em;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+/* Le récapitulatif unique des travaux, en tête de page. */
+.avis {
+  margin: 0 var(--marge);
+  border: 1.5px solid var(--travaux);
+  border-radius: 6px;
+  background: var(--travaux-clair);
+  padding: 0.9rem 1.1rem;
+  max-width: 62rem;
+}
+.avis > summary {
+  border: 0;
+  padding: 0;
+  color: var(--travaux);
+  font-family: var(--f-etroit);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.82rem;
+}
+.avis > summary::after {
+  border-color: var(--travaux);
+}
+.avis ul {
+  margin: 0.85rem 0 0;
+  padding-left: 1.2rem;
+  columns: 2;
+  column-gap: 2rem;
+  font-size: 0.88rem;
+  color: var(--encre-2);
+}
+@media (max-width: 44rem) {
+  .avis ul {
+    columns: 1;
+  }
+}
+
+/* ── Alerte dure : plafond de parcours dépassé ──────────────────────────── */
+
+.alerte {
+  border: 1.5px solid var(--l-c1);
+  border-radius: 6px;
+  background: var(--alerte-fond);
+  color: var(--alerte-texte);
+  padding: 0.7rem 0.9rem;
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  font-size: 0.88rem;
+  max-width: var(--mesure);
+}
+.alerte svg {
+  flex: 0 0 auto;
+  margin-top: 0.12rem;
+}
+
+/* ── Tableau ────────────────────────────────────────────────────────────── */
+
+.tableau-enveloppe {
+  overflow-x: auto;
+  border: 1px solid var(--filet);
+  border-radius: 6px;
+  background: var(--blanc);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.88rem;
+  min-width: 42rem;
+}
+caption {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  color: var(--encre-2);
+  font-size: 0.82rem;
+  border-bottom: 1px solid var(--filet);
+}
+th,
+td {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--filet);
+  vertical-align: top;
+}
+thead th {
+  font-family: var(--f-etroit);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.72rem;
+  color: var(--encre-3);
+  background: var(--papier-creux);
+  position: sticky;
+  top: 0;
+}
+tbody tr:last-child td,
+tbody tr:last-child th {
+  border-bottom: 0;
+}
+td.num {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Itinéraire (parcours personnel) ────────────────────────────────────── */
+
+.escale {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--filet);
+}
+@media (min-width: 52rem) {
+  .escale {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+}
+.escale-lieu {
+  font-family: var(--f-etroit);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* ── Mode soutenance : afficheur de prochain arrêt ──────────────────────── */
+
+.afficheur {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  background: var(--encre);
+  color: var(--papier);
+  box-shadow: 0 -14px 34px -14px rgba(22, 24, 28, 0.45);
+}
+.afficheur-jauge {
+  height: 4px;
+  display: flex;
+  gap: 2px;
+  background: var(--sombre-jauge);
+}
+.afficheur-jauge span {
+  background: var(--encre-2);
+  transition: background 0.3s var(--sortie);
+}
+.afficheur-jauge span[data-etat='fait'] {
+  background: var(--sombre-jauge-faite);
+}
+.afficheur-jauge span[data-etat='courant'] {
+  background: var(--papier);
+}
+.afficheur-corps {
+  padding: clamp(0.9rem, 2vw, 1.35rem) var(--marge);
+  display: grid;
+  gap: 0.7rem;
+}
+.afficheur-haut {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.afficheur-arret {
+  font-family: var(--f-etroit);
+  font-size: clamp(1.2rem, 0.95rem + 1.4vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+.afficheur-suivant {
+  font-family: var(--f-etroit);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sombre-meta);
+  margin: 0;
+}
+.afficheur-chrono {
+  margin: 0 0 0 auto;
+  font-family: var(--f-etroit);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.afficheur-chrono[data-depasse='true'] {
+  color: var(--sombre-alerte);
+}
+.afficheur-adire {
+  color: var(--sombre-prose);
+  font-style: italic;
+  max-width: var(--mesure);
+  margin: 0;
+}
+.afficheur-actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.afficheur .bouton {
+  background: transparent;
+  border-color: var(--sombre-filet);
+  color: var(--papier);
+}
+.afficheur .bouton:hover {
+  border-color: var(--papier);
+  box-shadow: none;
+}
+.afficheur .bouton--plein {
+  background: var(--papier);
+  border-color: var(--papier);
+  color: var(--encre);
+}
+.afficheur .bouton--plein:hover {
+  background: var(--blanc);
+  border-color: var(--blanc);
+  color: var(--encre);
+}
+.afficheur .bouton:disabled {
+  opacity: 0.35;
+}
+.afficheur .touche {
+  background: transparent;
+  border-color: var(--sombre-filet);
+  color: var(--sombre-meta);
+}
+
+/* ── Pied ───────────────────────────────────────────────────────────────── */
+
+.pied {
+  padding: clamp(2rem, 4vw, 3rem) var(--marge);
+  border-top: 1px solid var(--filet);
+  background: var(--papier-creux);
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--encre-2);
+}
+
+/* ── Utilitaires ────────────────────────────────────────────────────────── */
+
+.saut-contenu {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--encre);
+  color: var(--papier);
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 6px 0;
+  font-weight: 600;
+}
+.saut-contenu:focus {
+  left: 0;
+}
+
+.hors-ecran {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ══════════════════ PAGES DE LIGNE ══════════════════
+   Une page par compétence, construite comme le plan de ligne affiché à un arrêt.
+   ═════════════════════════════════════════════════════ */
+
+/* Barre des six lignes, sous la navigation : toujours atteignable. */
+.barre-lignes {
+  position: sticky;
+  top: 2.65rem;
+  z-index: 39;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  padding: 0.45rem var(--marge);
+  background: var(--papier-creux);
+  border-bottom: 1px solid var(--filet);
+}
+.barre-lignes .signal {
+  margin-right: 0.35rem;
+}
+.barre-ligne-lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.25rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--encre-2);
+  border: 1.5px solid transparent;
+  transition: border-color 0.16s var(--sortie), background 0.16s var(--sortie);
+}
+.barre-ligne-lien:hover {
+  background: var(--blanc);
+  border-color: var(--filet-fort);
+  color: var(--encre);
+}
+.barre-ligne-lien[aria-current='page'] {
+  background: var(--blanc);
+  border-color: var(--encre);
+  color: var(--encre);
+}
+.barre-ligne-verbe {
+  font-family: var(--f-etroit);
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+@media (max-width: 40rem) {
+  .barre-ligne-verbe {
+    display: none;
+  }
+}
+
+/* Fil d'Ariane */
+.fil-ariane {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--f-etroit);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--encre-3);
+  margin-bottom: 1.5rem;
+}
+.fil-ariane a {
+  color: var(--encre-3);
+  text-decoration: none;
+}
+.fil-ariane a:hover {
+  color: var(--encre);
+  text-decoration: underline;
+}
+
+/* Le plan d'une seule ligne */
+.plan-de-ligne {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem 0;
+}
+
+/* Chiffres clés de la ligne */
+.fiche-chiffres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.5rem;
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--filet);
+  border-bottom: 1px solid var(--filet);
+}
+.fiche-chiffres > div {
+  padding: 0.35rem 0;
+}
+.fiche-chiffres dt {
+  font-family: var(--f-etroit);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--encre-3);
+}
+.fiche-chiffres dd {
+  margin: 0.15rem 0 0;
+  font-family: var(--f-etroit);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Encart terminus */
+.encart-terminus {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin: 1.5rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border: 1.5px solid var(--ligne, var(--filet-fort));
+  border-radius: 6px;
+  background: var(--blanc);
+  max-width: var(--mesure);
+  font-size: 0.88rem;
+  color: var(--encre-2);
+}
+.encart-terminus svg {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+  color: var(--ligne, var(--encre));
+}
+
+/* Deux colonnes S4 / S6 */
+.deux-colonnes {
+  display: grid;
+  gap: 1.5rem 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  margin-top: 1.25rem;
+  max-width: 58rem;
+}
+
+/* La bascule : le paragraphe le plus important de la page */
+/* La bascule : le paragraphe le plus important de la page. Un filet de 1px suffit
+   à la détacher — au-delà, c'est un onglet latéral, pas une citation. */
+.bascule {
+  border-left: 1px solid var(--ligne, var(--encre));
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  max-width: var(--mesure);
+  font-size: 1.05rem;
+  color: var(--encre);
+  white-space: pre-line;
+}
+
+/* Missions qui desservent la ligne */
+.liste-dessertes {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+.desserte-lien {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.6rem 0.75rem 0.6rem 0.25rem;
+  margin-left: -0.25rem;
+  border-radius: 6px;
+  transition: background 0.16s var(--sortie);
+}
+.desserte-lien:hover {
+  background: var(--papier-creux);
+}
+.desserte-titre {
+  font-family: var(--f-etroit);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--encre);
+}
+.desserte-lien:hover .desserte-titre {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+.desserte-autres {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+
+/* Index des lignes, sur l'accueil */
+.index-lignes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.index-lignes > li {
+  border-top: 1px solid var(--filet);
+}
+.index-ligne-lien {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0.75rem 1rem 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.16s var(--sortie);
+}
+.index-ligne-lien:hover {
+  background: var(--papier-creux);
+}
+.index-ligne-nom {
+  font-family: var(--f-etroit);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--encre);
+}
+.index-ligne-lien:hover .index-ligne-nom {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+.index-ligne-etat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  flex: 0 0 auto;
+  font-family: var(--f-etroit);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: right;
+}
+@media (max-width: 44rem) {
+  .index-ligne-etat {
+    display: none;
+  }
+}
+
+/* Navigation de ligne à ligne, en pied de page de ligne */
+.nav-lignes {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.nav-ligne-lien {
+  display: grid;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: inherit;
+  max-width: 20rem;
+}
+.nav-ligne-lien--fin {
+  text-align: right;
+  justify-items: end;
+}
+.nav-ligne-nom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--f-etroit);
+  font-weight: 700;
+  color: var(--encre);
+}
+.nav-ligne-lien:hover .nav-ligne-nom {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
