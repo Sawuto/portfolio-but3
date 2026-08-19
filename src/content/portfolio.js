@@ -59,8 +59,16 @@ export const depotsPublics = {
 // ⚠️ Aucun dépôt de la forge Lyon 1 n'est sous ton compte : tu ne peux pas en
 //    changer la visibilité seul. `grandsae` est la SAÉ Dév. Avancé du S5.
 export const depots = {
+  // ⚠️ Créé le 3 septembre 2025, soit au début du S5, et bâti sur Spring Boot et
+  //    Angular — exactement les ressources R5.A.05 de ton relevé S5. C'est très
+  //    probablement LUI la SAÉ Dév. Avancé, et non `grandsae`. Vérifie la date de
+  //    création de grandsae : s'il date de 2024, il ne peut pas être du S5.
+  ressourcesEnseignements: {
+    nom: 'Ressources enseignements',
+    url: 'https://forge.univ-lyon1.fr/hlib.fedorchenko/ressources-enseignements-sae',
+  },
   grandSae: {
-    nom: 'SAÉ Développement avancé',
+    nom: 'Grand SAÉ',
     url: 'https://forge.univ-lyon1.fr/p2310628/grandsae',
   },
 }
@@ -546,68 +554,163 @@ export const stations = [
   /* SAÉ Développement avancé, semestre 5 — coefficient 50 dans CHACUNE des trois
      UE de niveau 3. La pièce académique la plus lourde de ton BUT3 : à remplir
      avant tout le reste. */
+  /* SAÉ Développement avancé, semestre 5 — coefficient 50 dans CHACUNE des trois
+     UE de niveau 3. La pièce académique la plus lourde du BUT3. */
   {
     id: 'sae',
     code: 'C1',
     leve: 'S6',
-    intitule: A_REMPLIR('Sujet exact de la SAÉ Développement avancé'),
+    intitule: "Application de gestion des ressources d'enseignement",
     organisation: 'IUT Lyon 1 — SAÉ Développement avancé, semestre 5',
     lieu: 'Villeurbanne',
-    periode: A_REMPLIR('Période'),
-    role: A_REMPLIR("Ton rôle et la taille de l'équipe"),
+    periode: 'septembre 2025 – janvier 2026',
+    role: 'Développeur — back-end, front-end et déploiement, sans spécialisation attribuée',
 
-    descriptif: A_REMPLIR("3 phrases : le besoin, ce que l'application fait, pour qui"),
+    descriptif:
+      "Application web de gestion des ressources d'enseignement, développée en équipe de " +
+      'quatre : comptes et rôles, formations, maquettes pédagogiques, affectations des ' +
+      "enseignants, et import des syllabus du programme national depuis un fichier. " +
+      "L'architecture sépare une interface Angular d'une API Spring Boot, l'ensemble " +
+      'démarrant en conteneurs pour que chacun travaille sur le même environnement.',
 
     contexte:
       "Situation d'apprentissage et d'évaluation du semestre 5, portant le coefficient 50 dans " +
       "les trois unités d'enseignement de niveau 3 du parcours. C'est le support académique de " +
-      'la validation de ces trois niveaux.',
+      'la validation de ces trois niveaux. Projet mené sur cinq mois à quatre, dans une équipe ' +
+      'sans spécialisation attribuée : chacun est intervenu sur le back-end, le front-end et le ' +
+      "déploiement. Le commanditaire était un enseignant du département, avec un cahier des " +
+      'charges fourni.',
 
-    technique: [A_REMPLIR('Back-end, front-end, base de données')],
-    resultats: [A_REMPLIR('Ce que le projet livrait, et ce qui fonctionnait')],
+    technique: [
+      'Java 21',
+      'Spring Boot',
+      'Angular',
+      'PostgreSQL',
+      'Docker Compose',
+      'Intégration continue',
+      'CORS et configuration de déploiement',
+    ],
+
+    resultats: [
+      '268 commits et 20 branches sur cinq mois, à quatre, avec relecture par demandes de fusion.',
+      "Premier contributeur du dépôt : 94 commits sur 268, soit 35 % dans une équipe de quatre. Je donne le chiffre avec sa limite — un décompte de commits mesure une fréquence, pas une difficulté, et un commit de refactorisation transverse ne pèse pas comme une correction d'une ligne.",
+      "Application démarrant en une commande grâce à la conteneurisation, ce qui supprime les écarts d'environnement entre les membres de l'équipe.",
+      "Refactorisation transverse du code ET de la documentation, du français vers l'anglais, portée sur une branche dédiée puis fusionnée — c'est ma dernière contribution au projet.",
+      'Import des syllabus du programme national depuis un fichier, pour éviter la ressaisie.',
+      "Migration du schéma vers PostgreSQL : reprise des jeux de données, protection des identifiants, correction de la casse, renommage d'une table portant un nom réservé, et remplacement d'un type de gros objet non transposable.",
+      "Mise en service : liaison de l'interface à l'API, configuration des origines autorisées, variables d'environnement et chaîne de construction.",
+      "Adaptation de l'écran d'affectation des enseignants aux petites largeurs.",
+      "Gestion des comptes et des rôles, avec la distinction entre enseignants permanents et vacataires.",
+      "Non abouti : l'analyse automatique de la qualité du code était configurée dans le dépôt mais nous ne l'avons jamais fait fonctionner. Je le mentionne parce que le fichier de configuration est visible et qu'il vaut mieux l'expliquer que le laisser trouver.",
+    ],
 
     sondes: [
       {
         competence: 'c1',
         niveau: 2.5,
         ac: [
-          'Développer des applications sur des supports spécifiques',
-          "Utiliser des patrons de conception pour le développement d'applications cohérentes",
+          'Choisir et implémenter les architectures adaptées',
+          "Appliquer des principes d'accessibilité et d'ergonomie",
+          'Adopter de bonnes pratiques de conception et de programmation',
         ],
-        justification: A_REMPLIR(
-          "Le niveau 3 s'intitule « Adapter des applications sur un ensemble de supports ». " +
-            "Quels supports visiez-vous, et quel choix d'architecture cela a-t-il imposé ?",
-        ),
+        justification:
+          "L'interface et l'API sont deux applications distinctes qui communiquent par une " +
+          "interface de programmation : c'est un choix d'architecture, pas une conséquence des " +
+          'outils. La conteneurisation en fait un troisième : elle garantit que les quatre ' +
+          'membres exécutent la même application, ce qui supprime une classe entière de ' +
+          'désaccords.',
       },
       {
         competence: 'c2',
-        niveau: 2.4,
-        ac: ["Profiler et analyser le comportement d'un code existant"],
-        justification: A_REMPLIR(
-          "Le niveau 3 s'intitule « Analyser et optimiser des applications ». Qu'avez-vous " +
-            "mesuré, et qu'avez-vous changé après l'avoir mesuré ?",
-        ),
+        niveau: 2.0,
+        ac: ['Appréhender la différence entre les paradigmes de programmation'],
+        justification:
+          "Cette SAÉ est le support académique de la validation du niveau 3 de cette " +
+          "compétence, mais je ne peux pas en tirer de preuve d'analyse mesurée : l'outil " +
+          "d'analyse automatique de la qualité était configuré et n'a jamais fonctionné. Ce " +
+          "que la SAÉ démontre réellement ici est plus modeste — tenir deux paradigmes en " +
+          "parallèle, objet côté serveur et réactif côté interface. L'analyse de code existant, " +
+          "je l'ai apprise chez Ciril Group, où elle est mesurée et documentée.",
+      },
+      {
+        competence: 'c3',
+        niveau: 1.9,
+        ac: [
+          'Rédiger une documentation technique (en français et en anglais)',
+          'Concevoir et développer des applications communicantes',
+          'Utiliser des serveurs et des services réseaux virtualisés',
+        ],
+        justification:
+          "J'ai porté le passage du code et de la documentation du français vers l'anglais, sur " +
+          "une branche dédiée, à un moment où le projet était déjà écrit. Et l'interface " +
+          "n'atteint l'API que parce que les origines autorisées, les variables " +
+          "d'environnement et la chaîne de construction ont été configurées : une application " +
+          "communicante ne communique pas d'elle-même.",
+      },
+      {
+        competence: 'c4',
+        niveau: 2.0,
+        ac: [
+          "Concevoir une base de données relationnelle à partir d'un cahier des charges",
+          'Assurer la confidentialité des données (intégrité et sécurité)',
+          'Manipuler des données hétérogènes',
+        ],
+        justification:
+          "Le modèle a été conçu depuis le cahier des charges, avec des comptes et des rôles qui " +
+          "déterminent ce que chaque utilisateur peut voir et modifier. Mais la preuve la plus " +
+          'nette est la migration du schéma vers PostgreSQL : un même modèle relationnel ne se ' +
+          "transpose pas d'un système à l'autre sans travail. Il a fallu renommer une table " +
+          'portant un nom réservé par le nouveau moteur, protéger les identifiants, corriger la ' +
+          'casse — là où le premier système était indifférent, le second ne l\'est pas — et ' +
+          "remplacer un type de gros objet qui n'existait pas de la même façon.",
+      },
+      {
+        competence: 'c5',
+        niveau: 1.9,
+        ac: [
+          "Appréhender les besoins du client et de l'utilisateur",
+          'Définir et mettre en œuvre une démarche de suivi de projet',
+        ],
+        justification:
+          'Le commanditaire était un enseignant du département et le cahier des charges était ' +
+          "fourni : l'enjeu n'était donc pas d'établir le besoin mais de le livrer. Vingt " +
+          'branches et un suivi par demandes de fusion sur cinq mois — le découpage du travail ' +
+          'était une décision permanente, pas un préalable.',
       },
       {
         competence: 'c6',
         niveau: 2.3,
-        ac: ['Organiser et partager une veille technologique et informationnelle'],
-        justification: A_REMPLIR(
-          "Sur une SAÉ, « manager une équipe » n'est pas hiérarchique : comment l'équipe " +
-            "s'est-elle organisée, et comment avez-vous partagé ce que chacun découvrait ?",
-        ),
+        ac: [
+          'Organiser et partager une veille technologique et informationnelle',
+          'Mobiliser les compétences interpersonnelles pour travailler dans une équipe informatique',
+          'Rendre compte de son activité professionnelle',
+        ],
+        justification:
+          "Premier contributeur avec 35 % des commits, et personne n'avait de rôle attribué : " +
+          'nous sommes tous intervenus sur le back-end, le ' +
+          "front-end et le déploiement. C'est ce qui a rendu la relecture par demandes de " +
+          'fusion indispensable plutôt que formelle — sans spécialisation, la relecture est le ' +
+          'seul endroit où ce que découvre un membre atteint les trois autres. La comparaison ' +
+          "avec mon alternance est nette : chez Ciril Group j'ai un périmètre défini et je " +
+          "rends compte ; ici, il fallait construire la circulation de l'information.",
       },
     ],
 
     traces: [
       {
-        titre: 'Dépôt de la SAÉ Développement avancé',
+        titre: "Dépôt de la SAÉ — application de gestion des ressources d'enseignement",
         nature: 'Dépôt Git — forge Lyon 1',
+        // URL non publiée : le dépôt est privé et son adresse contient le compte
+        // d'un camarade. Elle reste dans `depots.ressourcesEnseignements.url`.
         lien: A_REMPLIR('Un artefact public de ta contribution'),
-        lienPublic: A_REMPLIR("./traces/c1-sae.pdf — schéma d'architecture + liste de tes commits"),
+        lienPublic: A_REMPLIR(
+          "./traces/c1-sae.pdf — un schéma d'architecture que tu dessines, plus tes 94 commits " +
+            "exportés : git log --all --oneline --author=Enzo --author=SACCONE",
+        ),
         demontre: A_REMPLIR(
-          'Le schéma montre les choix, la liste de tes commits montre ton périmètre réel dans ' +
-            "l'équipe. Les deux ensemble valent mieux que le dépôt.",
+          'Le schéma montre les choix, la liste de tes commits montre ton périmètre réel dans une ' +
+            "équipe de quatre. Les deux ensemble valent mieux que le dépôt, qu'un jury ne clonera " +
+            'jamais. ⚠️ Avant tout export : retire les identifiants de démonstration du README.',
         ),
       },
     ],
