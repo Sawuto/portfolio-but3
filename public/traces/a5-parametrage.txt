@@ -1,0 +1,14 @@
+Extrait retapé (pas une capture d'écran), anonymisé — un des tickets du chantier de
+paramétrage qui m'était attribué. Noms de champs génériques, sans rapport avec les
+noms réels des colonnes ou des classes de l'application.
+
+// avant — la valeur est assemblée directement dans le texte de la requête
+requete.append(" AND champIndicateur=" + valeur);
+
+// après — la valeur passe par une variable liée, jamais par la chaîne
+requete.putBindVariable("champIndicateur", valeur);
+requete.append(" AND champIndicateur=:champIndicateur");
+
+Le défaut : la requête fonctionnait et retournait le bon résultat, mais rien n'empêchait
+la valeur assemblée dans la chaîne de contenir autre chose qu'une valeur — c'est la
+condition qui manquait, pas une erreur visible à l'usage.

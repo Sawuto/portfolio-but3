@@ -63,13 +63,19 @@ export const depots = {
   //    Angular — exactement les ressources R5.A.05 de ton relevé S5. C'est très
   //    probablement LUI la SAÉ Dév. Avancé, et non `grandsae`. Vérifie la date de
   //    création de grandsae : s'il date de 2024, il ne peut pas être du S5.
+  // ⚠️ URL réelle retirée du dépôt versionné : elle contient le compte d'un
+  //    camarade, et ce fichier finit dans un dépôt GitHub public. Note l'URL
+  //    ailleurs (gestionnaire de mots de passe, note locale non versionnée)
+  //    si tu veux la retrouver rapidement.
   ressourcesEnseignements: {
     nom: 'Ressources enseignements',
-    url: 'https://forge.univ-lyon1.fr/hlib.fedorchenko/ressources-enseignements-sae',
+    url: null,
   },
+  // ⚠️ Même consigne : URL réelle contenant un identifiant au format numéro
+  //    étudiant, retirée du dépôt versionné pour la même raison.
   grandSae: {
     nom: 'Grand SAÉ',
-    url: 'https://forge.univ-lyon1.fr/p2310628/grandsae',
+    url: null,
   },
 }
 
@@ -186,10 +192,7 @@ export const stations = [
       {
         competence: 'c4',
         niveau: 2.0,
-        ac: [
-          "Concevoir une base de données relationnelle à partir d'un cahier des charges",
-          "Optimiser les modèles de données de l'entreprise",
-        ],
+        ac: ["Optimiser les modèles de données de l'entreprise"],
         justification:
           "J'ai conçu la table de correspondance, son script de création et ses commentaires. " +
           'Quand ses colonnes ont dû être renommées, la migration devait purger les données ' +
@@ -465,6 +468,26 @@ export const stations = [
           'est apparu que le même besoin existait en recettes et que plusieurs collectivités ' +
           "l'avaient signalé sans être entendues. Élargir le périmètre faisait partie du travail.",
       },
+      {
+        competence: 'c4',
+        niveau: 2.0,
+        ac: ['Manipuler des données hétérogènes'],
+        justification:
+          "Le filtrage de l'écran de marchés reposait sur la présence ou l'absence d'une date, " +
+          "pas sur un indicateur explicite. Lire correctement comment l'information était " +
+          'réellement stockée, avant de corriger la requête, a été la clé de cette correction.',
+      },
+      {
+        competence: 'c6',
+        niveau: 2.0,
+        ac: [
+          'Mobiliser les compétences interpersonnelles pour travailler dans une équipe informatique',
+        ],
+        justification:
+          "Correction validée par une testeuse de l'équipe sur un parcours complet avant " +
+          "clôture : je ne clôturais pas un ticket seul, la vérification croisée par une " +
+          "personne extérieure au correctif faisait partie du travail.",
+      },
     ],
 
     traces: [
@@ -505,7 +528,9 @@ export const stations = [
     resultats: [
       "Corrections livrées sur les écrans qui m'étaient attribués, chacune relue puis fusionnée.",
       'Le défaut typique tenait à un seul caractère : une valeur comparée sans être déclarée comme variable liée.',
-      A_REMPLIR('Combien des tickets du chantier étaient les tiens ?'),
+      "La majeure partie de mon temps sur ce chantier a été la vérification des écrans déjà " +
+        "corrigés par l'équipe ; quelques tickets de correction m'ont aussi été attribués, dont " +
+        'celui illustré en trace.',
     ],
 
     sondes: [
@@ -540,13 +565,15 @@ export const stations = [
 
     traces: [
       {
-        titre: A_REMPLIR('Extrait de correction anonymisé, avant / après'),
+        titre: "Extrait de correction anonymisé — avant / après, un ticket qui m'était attribué",
         nature: 'Extrait de code',
-        lien: A_REMPLIR('./traces/a5-parametrage.pdf'),
-        demontre: A_REMPLIR(
-          'Trois lignes suffisent : la condition avant, la condition après, et pourquoi le ' +
-            'caractère manquant rendait la requête vulnérable. ⚠️ Masque les noms de tables.',
-        ),
+        lien: './traces/a5-parametrage.txt',
+        demontre:
+          "Retapé à la main, pas une capture d'écran : les noms de champs sont génériques, sans " +
+          "rapport avec les colonnes réelles. Il montre le principe (une valeur assemblée dans " +
+          "la chaîne, puis passée en variable liée). Sa limite : je n'ai traité qu'une partie " +
+          "des tickets de ce chantier moi-même — la majeure partie de mon temps sur A5 a été la " +
+          'vérification des écrans déjà corrigés par le reste de l\'équipe.',
       },
     ],
   },
@@ -558,7 +585,7 @@ export const stations = [
      UE de niveau 3. La pièce académique la plus lourde du BUT3. */
   {
     id: 'sae',
-    code: 'C1',
+    code: 'SAE',
     leve: 'S6',
     intitule: "Application de gestion des ressources d'enseignement",
     organisation: 'IUT Lyon 1 — SAÉ Développement avancé, semestre 5',
@@ -700,9 +727,12 @@ export const stations = [
       {
         titre: "Dépôt de la SAÉ — application de gestion des ressources d'enseignement",
         nature: 'Dépôt Git — forge Lyon 1',
-        // URL non publiée : le dépôt est privé et son adresse contient le compte
-        // d'un camarade. Elle reste dans `depots.ressourcesEnseignements.url`.
-        lien: A_REMPLIR('Un artefact public de ta contribution'),
+        // Le dépôt réel n'est jamais lié : privé, et son adresse contient le
+        // compte d'un camarade (voir `depots.ressourcesEnseignements`).
+        prive: true,
+        accesNote:
+          'Dépôt réel sur la forge Lyon 1, privé — ouvrable par ton tuteur enseignant, pas par ' +
+          'ton tuteur entreprise ni par un recruteur. Ce que le jury peut consulter est ci-dessous.',
         lienPublic: A_REMPLIR(
           "./traces/c1-sae.pdf — un schéma d'architecture que tu dessines, plus tes 94 commits " +
             "exportés : git log --all --oneline --author=Enzo --author=SACCONE",
@@ -859,6 +889,15 @@ export const stations = [
             "multijoueurs, et comment l'as-tu résolu ?",
         ),
       },
+      {
+        competence: 'c5',
+        niveau: 1.3,
+        ac: ["Identifier les acteurs et les différentes phases d'un cycle de développement"],
+        justification:
+          "J'ai rédigé la spécification du protocole d'échange multijoueur avant d'écrire le " +
+          'code : définir qui envoie quoi, sous quel format, avant l\'implémentation plutôt ' +
+          "qu'après.",
+      },
     ],
 
     traces: [
@@ -1005,7 +1044,7 @@ export const monteeEnCompetence = [
   },
   {
     competence: 'c6',
-    niveauS4: 1.8,
+    niveauS4: 1.5,
     niveauS6: 2.5,
     auS4:
       'Je travaillais en équipe entre étudiants, avec une note commune. Personne ne dépendait ' +
@@ -1093,10 +1132,11 @@ export const carnet = {
     'jamais à une seule compétence. Le terminus de chaque ligne est le niveau maximum que le ' +
     "parcours Réalisation d'applications conduit — et il n'est pas le même pour toutes.",
 
-  choixTechniques: A_REMPLIR(
-    'React et Vite, site statique publié sur GitHub Pages. Précise ce que tu as écrit ou ' +
-      'adapté toi-même.',
-  ),
+  choixTechniques:
+    'React et Vite, en site statique publié sur GitHub Pages. Aucun gabarit : la mise en page, ' +
+    "le routeur par fragment d'URL, le mode soutenance chronométré, les contrôles de conformité " +
+    "au référentiel et les icônes sont écrits pour ce portfolio, sans bibliothèque de composants " +
+    "ni de routage.",
 
   limites:
     'Ce portfolio ne montre pas mon code de production : il appartient à Ciril Group et les ' +

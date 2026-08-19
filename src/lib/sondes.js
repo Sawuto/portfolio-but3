@@ -189,7 +189,9 @@ export function avancement() {
       manques.push(`${p} — aucune trace`)
     }
     for (const [i, tr] of (st.traces ?? []).entries()) {
-      compter(tr.lien, `${p} — trace ${i + 1} : lien`)
+      // Une trace privée n'aura jamais de lien public à ce champ — c'est son
+      // rôle déclaré, pas un manque. `lienPublic`, lui, reste attendu.
+      if (!tr.prive) compter(tr.lien, `${p} — trace ${i + 1} : lien`)
       compter(tr.demontre, `${p} — trace ${i + 1} : ce qu'elle démontre`)
     }
   }
@@ -250,6 +252,24 @@ export function anomalies() {
             })
           }
         }
+      }
+    }
+  }
+
+  for (const ligne of monteeEnCompetence) {
+    const c = parCompetence[ligne.competence]
+    if (!c) continue
+    for (const [leve, niveau] of [
+      ['S4', ligne.niveauS4],
+      ['S6', ligne.niveauS6],
+    ]) {
+      if (plafondDepasse(ligne.competence, niveau)) {
+        liste.push({
+          gravite: 'erreur',
+          message:
+            `Montée en compétence — ${leve} : niveau ${niveau} déclaré sur « ${c.nom} », mais le ` +
+            `parcours RA plafonne cette compétence au niveau ${c.niveauMaxParcours}.`,
+        })
       }
     }
   }
