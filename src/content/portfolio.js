@@ -774,7 +774,7 @@ export const stations = [
       {
         titre: 'Certificat CCNA : Enterprise Networking, Security & Automation',
         nature: 'Certificat — Cisco Networking Academy',
-        lien: A_REMPLIR('./traces/b1-ccna.pdf — dépose le PDF tel quel, 5 minutes'),
+        lien: './traces/b1-ccna.pdf',
         demontre:
           'Ma seule preuve à la fois vérifiable, publique et non soumise à confidentialité. Sa ' +
           "limite, que je préfère dire avant qu'on me la demande : c'est un certificat de " +
