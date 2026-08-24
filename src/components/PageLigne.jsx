@@ -511,6 +511,8 @@ export function IndexLignes() {
                     <span>
                       <Trajet style={{ verticalAlign: '-2px' }} /> +{l.delta.toFixed(1)}
                     </span>
+                  ) : l.delta === null ? (
+                    <span style={{ color: 'var(--encre-3)' }}>S4 non sondé</span>
                   ) : (
                     <span style={{ color: 'var(--encre-3)' }}>terminus atteint au S4</span>
                   )}

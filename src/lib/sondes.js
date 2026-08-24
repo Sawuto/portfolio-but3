@@ -184,14 +184,17 @@ export function avancement() {
       compter(sonde.ac, `${p} — sonde ${i + 1} : apprentissages critiques`)
       compter(sonde.justification, `${p} — sonde ${i + 1} : justification`)
     }
-    if (!st.traces || st.traces.length === 0) {
+    // Une station sans aucune sonde ne revendique aucune compétence : elle n'a
+    // rien à prouver, donc l'absence de trace n'est pas un manque.
+    if ((st.sondes ?? []).length > 0 && (!st.traces || st.traces.length === 0)) {
       total += 1
       manques.push(`${p} — aucune trace`)
     }
     for (const [i, tr] of (st.traces ?? []).entries()) {
-      // Une trace privée n'aura jamais de lien public à ce champ — c'est son
-      // rôle déclaré, pas un manque. `lienPublic`, lui, reste attendu.
-      if (!tr.prive) compter(tr.lien, `${p} — trace ${i + 1} : lien`)
+      // Une trace privée, ou qui ne déclare pas de champ `lien` du tout (décrite
+      // en texte plutôt que par un artefact lié), n'a rien à compter ici — ce
+      // n'est pas un manque, c'est son rôle déclaré.
+      if (!tr.prive && 'lien' in tr) compter(tr.lien, `${p} — trace ${i + 1} : lien`)
       compter(tr.demontre, `${p} — trace ${i + 1} : ce qu'elle démontre`)
     }
   }
@@ -274,7 +277,9 @@ export function anomalies() {
     }
   }
 
-  const sansTrace = stations.filter((s) => !s.traces || s.traces.length === 0)
+  const sansTrace = stations.filter(
+    (s) => (s.sondes ?? []).length > 0 && (!s.traces || s.traces.length === 0),
+  )
   if (sansTrace.length) {
     liste.push({
       gravite: 'avertissement',
