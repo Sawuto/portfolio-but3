@@ -102,16 +102,12 @@ export default function PageLigne({ id }) {
               Niveau {nivEntier} —{' '}
               <strong>{c.niveaux.find((n) => n.n === nivEntier)?.intitule}</strong>
             </p>
-            <p className="prose" style={{ marginTop: '0.75rem' }}>
-              C'est la formulation exacte du référentiel national, reprise sans reformulation.
-              {typeof atteint === 'number' && atteint > nivEntier && (
-                <>
-                  {' '}
-                  Le niveau suivant est engagé sans être acquis : sur le plan, c'est le tronçon en
-                  pointillé.
-                </>
-              )}
-            </p>
+            {typeof atteint === 'number' && atteint > nivEntier && (
+              <p className="prose" style={{ marginTop: '0.75rem' }}>
+                Le niveau suivant est engagé sans être acquis : sur le plan, c'est le tronçon en
+                pointillé.
+              </p>
+            )}
           </>
         ) : (
           <Champ v={{ __aRemplir: 'Aucun niveau déclaré sur cette compétence' }} discret={false} />
@@ -366,13 +362,22 @@ function PlanDeLigne({ c, ligne, dessertes }) {
         terminus
       </text>
 
-      {/* Les missions, en arrêts sur la ligne */}
-      {dessertes.map(({ st, sonde }, i) =>
-        typeof sonde.niveau === 'number' ? (
-          <g key={st.id}>
-            <circle cx={x(sonde.niveau)} cy={y} r="5" fill="var(--papier)" stroke="var(--encre)" strokeWidth="2" />
+      {/* Les missions, en arrêts sur la ligne. Plusieurs missions au même niveau
+          (fréquent au plafond) partagent la même position : leurs codes sont
+          regroupés en une seule étiquette pour éviter qu'ils se superposent. */}
+      {(() => {
+        const groupes = new Map()
+        for (const { st, sonde } of dessertes) {
+          if (typeof sonde.niveau !== 'number') continue
+          const cle = Math.round(x(sonde.niveau))
+          if (!groupes.has(cle)) groupes.set(cle, { cx: x(sonde.niveau), codes: [] })
+          groupes.get(cle).codes.push(st.code)
+        }
+        return [...groupes.values()].map((g, i) => (
+          <g key={g.cx}>
+            <circle cx={g.cx} cy={y} r="5" fill="var(--papier)" stroke="var(--encre)" strokeWidth="2" />
             <text
-              x={x(sonde.niveau)}
+              x={g.cx}
               y={i % 2 === 0 ? y - 22 : y + 32}
               textAnchor="middle"
               fontSize="13"
@@ -380,11 +385,11 @@ function PlanDeLigne({ c, ligne, dessertes }) {
               fill="var(--encre)"
               style={{ fontFamily: 'var(--f-etroit)' }}
             >
-              {st.code}
+              {g.codes.join(' · ')}
             </text>
           </g>
-        ) : null,
-      )}
+        ))
+      })()}
 
       {typeof s4 === 'number' && (
         <circle cx={x(s4)} cy={y} r="7" fill="var(--papier)" stroke={couleur} strokeWidth="3" />
@@ -408,7 +413,7 @@ function PlanDeLigne({ c, ligne, dessertes }) {
       {typeof s4 === 'number' && (
         <text
           x={x(s4)}
-          y={y - 26}
+          y={y - 42}
           textAnchor="middle"
           fontSize="12"
           fontWeight="600"
@@ -514,7 +519,13 @@ export function IndexLignes() {
                   ) : l.delta === null ? (
                     <span style={{ color: 'var(--encre-3)' }}>S4 non sondé</span>
                   ) : (
-                    <span style={{ color: 'var(--encre-3)' }}>terminus atteint au S4</span>
+                    <span style={{ color: 'var(--encre-3)' }}>
+                      plafond dès le S4
+                      {(() => {
+                        const nbS6 = new Set(l.S6.stations.map(({ station }) => station.id)).size
+                        return nbS6 > 0 ? ` (confirmé ×${nbS6})` : ''
+                      })()}
+                    </span>
                   )}
                 </span>
               </a>

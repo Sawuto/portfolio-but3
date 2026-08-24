@@ -416,17 +416,6 @@ h4 {
   border-color: var(--filet);
 }
 
-.touche {
-  font-family: var(--f-etroit);
-  font-weight: 600;
-  font-size: 0.72rem;
-  border: 1.5px solid var(--filet-fort);
-  border-radius: 4px;
-  padding: 0.05rem 0.32rem;
-  color: var(--encre-2);
-  background: var(--blanc);
-}
-
 /* ── Dépli : ce qui doit exister sans encombrer ─────────────────────────── */
 
 details {
@@ -738,110 +727,6 @@ td.num {
   font-family: var(--f-etroit);
   font-weight: 700;
   font-size: 1.05rem;
-}
-
-/* ── Mode soutenance : afficheur de prochain arrêt ──────────────────────── */
-
-.afficheur {
-  position: fixed;
-  inset: auto 0 0 0;
-  z-index: 60;
-  background: var(--encre);
-  color: var(--papier);
-  box-shadow: 0 -14px 34px -14px rgba(22, 24, 28, 0.45);
-}
-.afficheur-jauge {
-  height: 4px;
-  display: flex;
-  gap: 2px;
-  background: var(--sombre-jauge);
-}
-.afficheur-jauge span {
-  background: var(--encre-2);
-  transition: background 0.3s var(--sortie);
-}
-.afficheur-jauge span[data-etat='fait'] {
-  background: var(--sombre-jauge-faite);
-}
-.afficheur-jauge span[data-etat='courant'] {
-  background: var(--papier);
-}
-.afficheur-corps {
-  padding: clamp(0.9rem, 2vw, 1.35rem) var(--marge);
-  display: grid;
-  gap: 0.7rem;
-}
-.afficheur-haut {
-  display: flex;
-  align-items: flex-end;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-}
-.afficheur-arret {
-  font-family: var(--f-etroit);
-  font-size: clamp(1.2rem, 0.95rem + 1.4vw, 1.9rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin: 0;
-}
-.afficheur-suivant {
-  font-family: var(--f-etroit);
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--sombre-meta);
-  margin: 0;
-}
-.afficheur-chrono {
-  margin: 0 0 0 auto;
-  font-family: var(--f-etroit);
-  font-weight: 700;
-  font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.5rem);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.afficheur-chrono[data-depasse='true'] {
-  color: var(--sombre-alerte);
-}
-.afficheur-adire {
-  color: var(--sombre-prose);
-  font-style: italic;
-  max-width: var(--mesure);
-  margin: 0;
-}
-.afficheur-actions {
-  display: flex;
-  gap: 0.45rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.afficheur .bouton {
-  background: transparent;
-  border-color: var(--sombre-filet);
-  color: var(--papier);
-}
-.afficheur .bouton:hover {
-  border-color: var(--papier);
-  box-shadow: none;
-}
-.afficheur .bouton--plein {
-  background: var(--papier);
-  border-color: var(--papier);
-  color: var(--encre);
-}
-.afficheur .bouton--plein:hover {
-  background: var(--blanc);
-  border-color: var(--blanc);
-  color: var(--encre);
-}
-.afficheur .bouton:disabled {
-  opacity: 0.35;
-}
-.afficheur .touche {
-  background: transparent;
-  border-color: var(--sombre-filet);
-  color: var(--sombre-meta);
 }
 
 /* ── Pied ───────────────────────────────────────────────────────────────── */

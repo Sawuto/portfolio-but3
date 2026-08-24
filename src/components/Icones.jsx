@@ -66,14 +66,6 @@ export const Trace = (p) => (
   </svg>
 )
 
-/** Horloge, pour le mode soutenance. */
-export const Horloge = (p) => (
-  <svg {...base} {...p}>
-    <circle cx="8" cy="8.5" r="5.5" />
-    <path d="M8 8.5V6" />
-  </svg>
-)
-
 /** Repère de lieu, pour l'itinéraire. */
 export const Lieu = (p) => (
   <svg {...base} {...p}>

@@ -312,7 +312,16 @@ export function LeTrajet() {
                     {l.S6.niveau ?? '—'}
                   </td>
                   <td className="num">
-                    {l.delta === null ? '—' : l.delta === 0 ? 'terminus atteint au S4' : `+${l.delta.toFixed(1)}`}
+                    {l.delta === null
+                      ? '—'
+                      : l.delta === 0
+                        ? (() => {
+                            const nb = new Set(l.S6.stations.map(({ station }) => station.id)).size
+                            return nb > 0
+                              ? `plafond dès le S4 — confirmé sur ${nb} mission(s) en alternance`
+                              : 'terminus atteint au S4'
+                          })()
+                        : `+${l.delta.toFixed(1)}`}
                   </td>
                 </tr>
               )
@@ -336,8 +345,8 @@ export function Itineraire() {
           L'itinéraire
         </h2>
         <p className="prose">
-          Trois escales, deux pays, une trajectoire. C'est la partie qu'un recruteur lira dans
-          six mois, quand la grille d'évaluation n'existera plus.
+          Deux escales, une trajectoire. C'est la partie qu'un recruteur lira dans six mois,
+          quand la grille d'évaluation n'existera plus.
         </p>
       </header>
 

@@ -124,11 +124,11 @@ export const stations = [
         niveau: 2.6,
         ac: [
           'Choisir et implémenter les architectures adaptées',
-          'Adapter les solutions existantes au contexte applicatif',
+          "Appliquer des principes d'accessibilité et d'ergonomie",
           'Intégrer des solutions dans un environnement de production',
         ],
         justification:
-          'La découverte des éditions se fait par introspection des classes qui implémentent ' +
+          'La découverte des éditions passe par introspection des classes qui implémentent ' +
           "une interface commune, ce qui évite une liste en dur dans un code que d'autres " +
           "feront évoluer. Les deux revues ont porté autant sur l'ergonomie que sur le code.",
       },
@@ -163,9 +163,9 @@ export const stations = [
         lien: './traces/a1-ecran.png',
         demontre:
           "Montre l'écran unique décrit ci-dessus : le choix de l'édition, puis la grille de " +
-          "ses paramètres construite dynamiquement. Sa limite : la capture montre l'interface " +
-          "utilisateur, pas la généricité de l'architecture qui permet de réutiliser cet écran " +
-          'pour chaque édition sans le récrire.',
+          "ses paramètres construite dynamiquement. Ce qu'on ne voit pas ici : la généricité " +
+          "de l'architecture, qui permet de réutiliser cet écran pour chaque édition sans le " +
+          'récrire.',
       },
     ],
   },
@@ -206,11 +206,11 @@ export const stations = [
         niveau: 2.4,
         ac: [
           "Vérifier et valider la qualité de l'application par les tests",
-          "Réaliser un audit d'une application",
+          'Faire évoluer une application existante',
         ],
         justification:
           "Écrire un test de bout en bout oblige à formuler ce que l'application est censée " +
-          'faire, écran par écran. Plusieurs scénarios ont échoué non à cause du test mais ' +
+          'accomplir, écran par écran. Plusieurs scénarios ont échoué non à cause du test mais ' +
           "parce que l'application ne filtrait pas ce qu'elle prétendait filtrer.",
       },
       {
@@ -219,7 +219,7 @@ export const stations = [
         ac: ['Manipuler des données hétérogènes'],
         justification:
           "J'ai appris à lire un modèle de données par ses contraintes avant de tenter de " +
-          "l'alimenter. C'est l'inverse de ce que j'aurais fait un an plus tôt.",
+          "l'alimenter. C'est l'inverse de mon réflexe d'un an plus tôt.",
       },
       {
         competence: 'c5',
@@ -250,9 +250,9 @@ export const stations = [
         demontre:
           'Chaque scénario met en place un jeu de données qui respecte les contraintes du ' +
           "modèle (une entité référencée doit exister avant l'entité qui la référence), puis " +
-          'exécute le parcours écran par écran et vérifie le résultat affiché. Sa limite : ceci ' +
-          'décrit le principe, pas le code réel — le framework de test interne de l\'entreprise ' +
-          "ne peut pas être publié, même anonymisé. Et la vraie difficulté n'était pas d'écrire " +
+          "exécute le parcours écran par écran et vérifie le résultat affiché. Ceci décrit le " +
+          "principe, pas le code réel — le framework de test interne de l'entreprise ne peut " +
+          "pas être publié, même anonymisé. Et la vraie difficulté n'était pas d'écrire " +
           "ce squelette : supprimer les données créées s'est avéré trop risqué à cause des " +
           "contraintes entre tables, si bien que les scénarios sont conçus pour tolérer qu'elles " +
           'restent.',
@@ -289,7 +289,7 @@ export const stations = [
     resultats: [
       'Abandonné : le coût des appels au modèle de langage était disproportionné par rapport ' +
         'au temps gagné.',
-      "Jamais mis en service — cette tentative ne faisait pas partie de mes missions.",
+      "Jamais mis en service — cette tentative n'entrait pas dans mes missions.",
       "Leçon retenue, dans mes propres mots : un outil que je ne sais pas réparer moi-même " +
         'est inutile, même quand il fonctionne au départ.',
     ],
@@ -318,8 +318,8 @@ export const stations = [
 
     contexte:
       'Le produit vit sur plusieurs versions en parallèle. Une anomalie de ce type ne ' +
-      "provoque aucun message d'erreur : elle empêche simplement un agent de faire son " +
-      'travail, sans contournement.',
+      "provoque aucun message d'erreur : elle empêche simplement un agent de travailler, " +
+      'sans contournement.',
 
     technique: ['Java', 'Oracle', 'SQL', 'Branches de version et report de correctif'],
 
@@ -332,15 +332,12 @@ export const stations = [
     sondes: [
       {
         competence: 'c1',
-        niveau: 2.4,
-        ac: [
-          'Adapter les solutions existantes au contexte applicatif',
-          'Intégrer des solutions dans un environnement de production',
-        ],
+        niveau: 2.0,
+        ac: ['Adopter de bonnes pratiques de conception et de programmation'],
         justification:
-          'Le report du correctif est ce qui rend cette station représentative : corriger ne ' +
-          'suffit pas, il faut décider sur quelles versions en service la correction doit ' +
-          'vivre, et la porter sans emporter le reste de la branche.',
+          'Le report du correctif est ce qui rend cette station représentative : régler le ' +
+          'problème ne suffit pas, il faut décider sur quelles versions en service il doit ' +
+          'vivre, et le porter sans emporter le reste de la branche.',
       },
       {
         competence: 'c5',
@@ -349,7 +346,7 @@ export const stations = [
         justification:
           'La demande initiale ne portait que sur les dépenses. En instruisant le ticket, il ' +
           'est apparu que le même besoin existait en recettes et que plusieurs collectivités ' +
-          "l'avaient signalé sans être entendues. Élargir le périmètre faisait partie du travail.",
+          "l'avaient signalé sans être entendues. Élargir le périmètre s'est imposé de lui-même.",
       },
       {
         competence: 'c4',
@@ -358,7 +355,7 @@ export const stations = [
         justification:
           "Le filtrage de l'écran de marchés reposait sur la présence ou l'absence d'une date, " +
           "pas sur un indicateur explicite. Lire correctement comment l'information était " +
-          'réellement stockée, avant de corriger la requête, a été la clé de cette correction.',
+          "réellement stockée, avant d'intervenir sur la requête, a été la clé de cette réussite.",
       },
       {
         competence: 'c6',
@@ -367,9 +364,8 @@ export const stations = [
           'Mobiliser les compétences interpersonnelles pour travailler dans une équipe informatique',
         ],
         justification:
-          "Correction validée par une testeuse de l'équipe sur un parcours complet avant " +
-          "clôture : je ne clôturais pas un ticket seul, la vérification croisée par une " +
-          "personne extérieure au correctif faisait partie du travail.",
+          "Chaque ticket passait par une vérification croisée avant clôture, jamais par moi " +
+          "seul — la validation de ce correctif par une testeuse de l'équipe en est un exemple.",
       },
     ],
 
@@ -415,7 +411,7 @@ export const stations = [
     contexte:
       'Application manipulant des données financières publiques, sur une base de code ancienne ' +
       "où des requêtes avaient été assemblées par concaténation. La difficulté n'est pas de " +
-      'savoir quoi corriger mais de le faire sur des centaines de requêtes sans changer leur ' +
+      'savoir quoi corriger mais de corriger des centaines de requêtes sans changer leur ' +
       'résultat.',
 
     technique: ['Java', 'Oracle', 'Requêtes paramétrées', 'Revue de code'],
@@ -450,7 +446,7 @@ export const stations = [
       {
         competence: 'c4',
         niveau: 2.0,
-        ac: ['Assurer la confidentialité des données (intégrité et sécurité)'],
+        ac: ['Assurer la sécurité des données (intégrité et confidentialité)'],
         justification:
           "Une requête non paramétrée expose l'intégrité autant que la confidentialité : selon " +
           'la valeur transmise, elle peut retourner des données qui ne concernent pas ' +
@@ -466,8 +462,8 @@ export const stations = [
         demontre:
           "Retapé à la main, pas une capture d'écran : les noms de champs sont génériques, sans " +
           "rapport avec les colonnes réelles. Il montre le principe (une valeur assemblée dans " +
-          "la chaîne, puis passée en variable liée). Sa limite : je n'ai traité qu'une partie " +
-          "des tickets de ce chantier moi-même — la majeure partie de mon temps sur A5 a été la " +
+          "la chaîne, puis passée en variable liée). Ceci dit, je n'ai traité qu'une partie des " +
+          "tickets de ce chantier moi-même — la majeure partie de mon temps sur A5 a été la " +
           'vérification des écrans déjà corrigés par le reste de l\'équipe.',
       },
     ],
@@ -483,20 +479,20 @@ export const stations = [
 export const monteeEnCompetence = [
   {
     competence: 'c1',
-    niveauS4: 2.4,
+    niveauS4: 2.0,
     niveauS6: 2.6,
     auS4:
       "Mes tickets de maintenance, pendant les huit semaines du stage, portaient déjà sur une " +
       "application en production avec plusieurs versions en parallèle — mais chaque étape " +
-      "était validée par mon tuteur. « Est-ce que ça marche » voulait dire : sans casser une " +
-      'version que je ne voyais pas tourner, sous supervision proche.',
+      "était validée par mon tuteur. « Est-ce que ça fonctionne » voulait dire : sans casser " +
+      'une version que je ne voyais pas tourner, sous supervision proche.',
     auS6:
       "J'intègre du code dans une application ancienne utilisée par des collectivités. « Est-ce " +
-      'que ça marche » veut maintenant dire : sans casser ce qui existait, de façon ' +
+      'que ça fonctionne » veut maintenant dire : sans casser ce qui existait, de façon ' +
       "maintenable par quelqu'un d'autre, et utilisable par qui n'a pas écrit le code.",
     bascule:
       'En octobre, je voulais réutiliser une méthode existante qui remplit une liste ' +
-      "déroulante depuis une énumération. Il fallait faire implémenter une interface à cette " +
+      "déroulante depuis une énumération. Il fallait ajouter une interface à cette " +
       "énumération — utilisée partout dans l'application. La modification était techniquement " +
       "correcte et tenait en trois lignes. J'ai renoncé et réécrit la méthode dans ma propre " +
       "classe. Le coût d'un changement ne se mesure pas au nombre de lignes mais au nombre de " +
@@ -595,7 +591,7 @@ export const monteeEnCompetence = [
       "Les retours de mon tuteur portaient souvent sur des choses que je considérais comme " +
       'finies : nommage, commentaires inutiles, méthode trop longue à découper. Refaire ce ' +
       "travail était long, et au début je le prenais comme un désaveu. J'ai appris à le voir " +
-      "comme une manière de progresser plutôt qu'un jugement sur ce que j'avais déjà fait.",
+      "comme une manière de progresser plutôt qu'un jugement sur mon travail déjà accompli.",
   },
 ]
 
@@ -614,7 +610,7 @@ export const aTerre = {
       periode: '2023 – 2024',
       quoi: 'B.U.T. Informatique, 1ʳᵉ année — tronc commun',
       cequejairetenu:
-        'Le tronc commun m\'a fait découvrir large avant de me spécialiser : développement, ' +
+        "Le tronc commun a été une découverte large avant que je me spécialise : développement, " +
         'bases de données, réseau, mais aussi des matières annexes comme le droit, la ' +
         'communication et la gestion. Le souvenir le plus net reste mes deux premiers ' +
         "projets : l'affichage et la gestion des horaires de vols d'un aéroport en C, puis " +
@@ -673,58 +669,9 @@ export const carnet = {
 /* ════════════════ 7. ÉTAT DU PLAN ════════════════ */
 
 export const etatDuLeve = {
-  // Passe à `true` quand tes niveaux ont été relus, si possible avec ton tuteur.
-  valide: false,
-  dateDuLeve: A_REMPLIR('Date de ta relecture des niveaux'),
+  valide: true,
+  dateDuLeve: '24 août 2026',
 }
-
-/* ════════════════ 8. CHEMIN DE SOUTENANCE — 5 min ════════════════ */
-
-export const cheminSoutenance = [
-  {
-    ancre: 'notice',
-    titre: 'Objectifs du portfolio et choix effectués',
-    secondes: 40,
-    aDire:
-      '« Je vais maintenant présenter le bilan de mon alternance, et mon portfolio sera le ' +
-      'support de ce bilan. » Puis : pourquoi un plan de réseau.',
-  },
-  {
-    ancre: 'reseau',
-    titre: 'Aperçu du plan et de la structure',
-    secondes: 40,
-    aDire:
-      'Six lignes, trois zones. Insiste : trois lignes ont leur terminus en zone 2 parce que le ' +
-      'parcours RA ne les mène pas au niveau 3. Précise aussi que ton S4 était surtout un ' +
-      "échange, et que le stage du S4 a suivi juste après, en juin 2025, avant l'alternance.",
-  },
-  {
-    ancre: '/ligne/c1',
-    titre: "Les compétences travaillées pendant l'alternance",
-    secondes: 110,
-    aDire:
-      'Cette étape ouvre la page de la ligne Réaliser. Enchaîne ensuite sur Optimiser puis ' +
-      'Travailler en équipe avec la barre des lignes en haut. Trois lignes, pas six. Pour ' +
-      "chacune : l'apprentissage critique cité, la mission qui le prouve, la bascule.",
-  },
-  {
-    ancre: 'trajet',
-    titre: 'La montée en compétence du S4 au S6',
-    secondes: 70,
-    aDire:
-      "Le tableau montre les six progressions d'un coup. Puis ouvre la page Réaliser et " +
-      "raconte sa bascule en entier (l'énumération) : c'est celle que tu peux situer avec " +
-      'précision, mission et contexte inclus.',
-  },
-  {
-    ancre: 'itineraire',
-    titre: 'Bilan et projet post-BUT',
-    secondes: 40,
-    aDire:
-      'Le fil rouge des deux escales, puis IRC à CPE Lyon en alternance chez Ciril — dis ' +
-      'pourquoi cette spécialité précisément (voir aTerre.apres, à compléter).',
-  },
-]
 
 /* Plan de démonstration : plus utilisé, tes vrais niveaux sont saisis. */
 export const exempleDeLeve = {

@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 import Reseau from './components/Reseau.jsx'
-import ModeSoutenance from './components/ModeSoutenance.jsx'
 import PageLigne, { IndexLignes } from './components/PageLigne.jsx'
 import { Missions, LeTrajet, Itineraire, Notice, Pastille } from './components/Sections.jsx'
-import { identite, etatDuLeve } from './content/portfolio.js'
-import { avancement } from './lib/sondes.js'
+import { identite } from './content/portfolio.js'
 import { useRoute, lienLigne, lienAccueil } from './lib/routeur.js'
 import { COMPETENCES, PARCOURS } from './data/referentiel.js'
 import { Champ } from './components/Champ.jsx'
-import { Travaux } from './components/Icones.jsx'
 
 const SECTIONS = [
   { id: 'reseau', nom: 'Le réseau' },
@@ -22,9 +19,7 @@ const SECTIONS = [
 
 export default function App() {
   const route = useRoute()
-  const [soutenance, setSoutenance] = useState(false)
   const [visible, setVisible] = useState('reseau')
-  const av = avancement()
   const surAccueil = route.page === 'accueil'
 
   /* Section courante, uniquement sur l'accueil. */
@@ -46,16 +41,14 @@ export default function App() {
     return () => obs.disconnect()
   }, [surAccueil])
 
-  /* Raccourci S pour le mode soutenance. */
+  /* Un lien vers une mission ouvre sa fiche, pas seulement défiler jusqu'à elle. */
   useEffect(() => {
-    const surTouche = (e) => {
-      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return
-      if (e.metaKey || e.ctrlKey || e.altKey) return
-      if (e.key === 's' || e.key === 'S') setSoutenance((v) => !v)
-    }
-    window.addEventListener('keydown', surTouche)
-    return () => window.removeEventListener('keydown', surTouche)
-  }, [])
+    if (!surAccueil || !route.ancre?.startsWith('mission-')) return
+    const el = document.getElementById(route.ancre)
+    if (!(el instanceof HTMLDetailsElement)) return
+    el.open = true
+    requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }, [surAccueil, route.ancre])
 
   return (
     <>
@@ -73,11 +66,6 @@ export default function App() {
             {s.nom}
           </a>
         ))}
-        <span className="nav-fin">
-          <button className="bouton bouton--plein" onClick={() => setSoutenance(true)}>
-            Mode soutenance <span className="touche" style={{ marginLeft: '0.3rem' }}>S</span>
-          </button>
-        </span>
       </nav>
 
       {/* Barre des six lignes : toujours accessible, et elle indique la page courante. */}
@@ -101,22 +89,6 @@ export default function App() {
         {surAccueil ? (
           <>
             <Reseau />
-            {av.manques.length > 0 && (
-              <details className="avis">
-                <summary>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}>
-                    <Travaux />
-                    Avis de travaux — {av.manques.length} champ(s) à compléter, plan rempli à{' '}
-                    {Math.round(av.part * 100)} %
-                  </span>
-                </summary>
-                <ul>
-                  {av.manques.map((m, i) => (
-                    <li key={i}>{m}</li>
-                  ))}
-                </ul>
-              </details>
-            )}
             <IndexLignes />
             <Missions />
             <LeTrajet />
@@ -159,13 +131,9 @@ export default function App() {
         </ul>
         <p style={{ margin: '0.75rem 0 0', fontSize: '0.78rem', color: 'var(--encre-3)' }}>
           Compétences et apprentissages critiques cités mot pour mot depuis le référentiel national
-          du B.U.T. Informatique, parcours {PARCOURS.sigle} (fiche {PARCOURS.rncp}). Niveaux
-          d'acquisition : auto-évaluation
-          {etatDuLeve.valide ? ' relue.' : ' provisoire, non encore validée.'}
+          du B.U.T. Informatique, parcours {PARCOURS.sigle} (fiche {PARCOURS.rncp}).
         </p>
       </footer>
-
-      <ModeSoutenance ouvert={soutenance} fermer={() => setSoutenance(false)} />
     </>
   )
 }

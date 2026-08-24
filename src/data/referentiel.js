@@ -13,13 +13,16 @@
  *  - Fiche RNCP35475 (France Compétences) — « BUT Informatique : Réalisation
  *    d'applications : conception, développement, validation ». Université Claude
  *    Bernard Lyon 1 y figure comme certificateur. Blocs BC01 à BC11.
- *  - Référentiel de compétences du B.U.T. Informatique (annexe du Programme
- *    National, arrêté du 6 décembre 2019) pour les niveaux 1 et 2, communs à tous
- *    les parcours, et les composantes essentielles.
+ *  - Programme National B.U.T. Informatique 2022 (Ministère de l'Enseignement
+ *    supérieur, de la Recherche et de l'Innovation), section « Référentiel de
+ *    compétences — Parcours A », vérifié mot pour mot le 24/08/2026. C'est la
+ *    version la plus récente et la plus complète : elle a remplacé les
+ *    composantes essentielles et plusieurs apprentissages critiques (surtout
+ *    aux niveaux 2 et 3) présents dans l'annexe 2019 utilisée jusque-là.
  *
- * À VÉRIFIER UNE FOIS : la fiche RNCP35475 arrive à échéance le 31/08/2026 et est
- * remplacée par la fiche RNCP41588. Si ta soutenance dépend de la nouvelle fiche,
- * compare les intitulés avant de rendre. Le tronc commun bouge rarement.
+ * La fiche RNCP35475 arrive à échéance le 31/08/2026, remplacée par RNCP41588.
+ * Le contenu ci-dessous a déjà été mis à jour sur le Programme National 2022,
+ * donc aligné sur ce que la nouvelle fiche reprendra vraisemblablement.
  */
 
 export const PARCOURS = {
@@ -50,11 +53,9 @@ export const COMPETENCES = [
     enonce:
       "Développer — c'est-à-dire concevoir, coder, tester et intégrer — une solution informatique pour un client.",
     composantes: [
-      "en expliquant et communiquant l'avancée au client et aux utilisateurs",
-      'en précisant et en respectant les besoins décrits par le client',
+      'en respectant les besoins décrits par le client',
       'en appliquant les principes algorithmiques',
       'en veillant à la qualité du code et à sa documentation',
-      'en respectant la législation, les normes professionnelles et les enjeux sociétaux',
       'en choisissant les ressources techniques appropriées',
     ],
     situations: [
@@ -80,26 +81,18 @@ export const COMPETENCES = [
           'Élaborer et implémenter les spécifications fonctionnelles et non fonctionnelles à partir des exigences',
           "Appliquer des principes d'accessibilité et d'ergonomie",
           'Adopter de bonnes pratiques de conception et de programmation',
-          "Utiliser des patrons de conception pour le développement d'applications cohérentes",
-          'Adapter les solutions existantes au contexte applicatif',
           "Vérifier et valider la qualité de l'application par les tests",
         ],
       },
       {
         n: 3,
-        // Formulation portée sur le relevé de notes S5 de l'IUT Lyon 1 :
-        // « UE5-1 BC1-N3 Adapter des appli. sur un ensemble de supports ».
-        // Le jury lit ses propres intitulés d'UE : c'est celui-ci qui est cité.
-        intitule: 'Adapter des applications sur un ensemble de supports',
-        // Variante rencontrée sur la fiche RNCP et sur les documents d'autres
-        // parcours. À CONFIRMER AVEC TON TUTEUR ENSEIGNANT avant la soutenance :
-        // si ton département utilise cette formulation, échange les deux lignes.
-        variante:
-          'Se spécialiser sur un ensemble de supports (embarqué, web, mobile, IOT...) avec un suivi qualitatif',
+        // Formulation confirmée à la fois par le relevé de notes S5 de l'IUT
+        // Lyon 1 (« UE5-1 BC1-N3 Adapter des appli. sur un ensemble de
+        // supports ») et par le Programme National 2022 lui-même.
+        intitule: 'Adapter des applications sur un ensemble de supports (embarqué, web, mobile, IoT…)',
         ac: [
           'Choisir et implémenter les architectures adaptées',
-          'Développer des applications sur des supports spécifiques',
-          "Réaliser un audit d'une application",
+          'Faire évoluer une application existante',
           'Intégrer des solutions dans un environnement de production',
         ],
       },
@@ -124,7 +117,7 @@ export const COMPETENCES = [
     situations: [
       'Améliorer les performances des programmes dans des contextes contraints',
       "Limiter l'impact environnemental d'une application informatique",
-      'Mettre en place des applications informatiques adaptées et innovantes',
+      'Mettre en place des applications informatiques adaptées et efficaces',
     ],
     niveaux: [
       {
@@ -133,7 +126,6 @@ export const COMPETENCES = [
         ac: [
           'Analyser un problème avec méthode (découpage en éléments algorithmiques simples, structure de données...)',
           'Comparer des algorithmes pour des problèmes classiques (tris simples, recherche...)',
-          'Expérimenter la notion de compilation et les représentations bas niveau des données',
           "Formaliser et mettre en œuvre des outils mathématiques pour l'informatique",
         ],
       },
@@ -143,7 +135,6 @@ export const COMPETENCES = [
         ac: [
           'Choisir des structures de données complexes adaptées au problème',
           'Utiliser des techniques algorithmiques adaptées pour des problèmes complexes (par ex. recherche opérationnelle, méthodes arborescentes, optimisation globale, intelligence artificielle...)',
-          'Appréhender la différence entre les paradigmes de programmation',
           'Comprendre les enjeux et moyens de sécurisation des données et du code',
           'Évaluer l\'impact environnemental et sociétal des solutions proposées',
         ],
@@ -152,10 +143,9 @@ export const COMPETENCES = [
         n: 3,
         intitule: 'Analyser et optimiser des applications',
         ac: [
-          "Anticiper les résultats de diverses métriques (temps d'exécution, occupation mémoire...)",
-          "Profiler et analyser le comportement d'un code existant",
-          'Appliquer des méthodes de calcul scientifique (imagerie, immersion, intelligence artificielle, jeux vidéos, parallélisme, calcul formel...)',
-          'Identifier les solutions techniques pour gérer la montée en charge des applications',
+          "Anticiper les résultats de diverses métriques (temps d'exécution, occupation mémoire, montée en charge...)",
+          "Profiler, analyser et justifier le comportement d'un code existant",
+          "Choisir et utiliser des bibliothèques et méthodes dédiées au domaine d'application (imagerie, immersion, intelligence artificielle, jeux vidéos, parallélisme, calcul formel...)",
         ],
       },
     ],
@@ -171,12 +161,10 @@ export const COMPETENCES = [
     enonce:
       "Installer, configurer, mettre à disposition, maintenir en conditions opérationnelles des infrastructures, des services et des réseaux et optimiser le système informatique d'une organisation.",
     composantes: [
-      "en maîtrisant l'architecture des systèmes et des réseaux",
       "en sécurisant le système d'information",
-      'en appliquant les obligations légales, les normes en vigueur et les bonnes pratiques',
-      'en mettant en œuvre les mesures correctives adaptées à la nature des incidents identifiés',
-      "en respectant les contraintes de performances, de coûts et d'efficacité énergétique",
-      'en assurant la pérennité des données et des logiciels',
+      'en appliquant les normes en vigueur et les bonnes pratiques architecturales et de sécurité',
+      'en offrant une qualité de service optimale',
+      "en assurant la continuité d'activité",
     ],
     situations: [
       'Déployer une nouvelle architecture technique',
@@ -201,7 +189,6 @@ export const COMPETENCES = [
           'Concevoir et développer des applications communicantes',
           'Utiliser des serveurs et des services réseaux virtualisés',
           "Sécuriser les services et données d'un système",
-          'Rédiger une documentation technique (en français et en anglais)',
         ],
       },
       {
@@ -230,9 +217,8 @@ export const COMPETENCES = [
       "Concevoir, gérer, administrer et exploiter les données de l'entreprise et mettre à disposition toutes les informations pour un bon pilotage de l'entreprise.",
     composantes: [
       'en respectant les réglementations sur le respect de la vie privée et la protection des données personnelles',
-      "en respectant des enjeux économiques, sociétaux et écologiques de l'utilisation et du stockage des données, ainsi que des différentes infrastructures (datacenters, cloud...)",
-      "en s'appuyant sur des bases mathématiques solides (par exemple logique et statistiques)",
-      'en considérant les modèles de données utilisés dans les développements technologiques',
+      "en respectant les enjeux économiques, sociétaux et écologiques de l'utilisation du stockage de données, ainsi que les différentes infrastructures (data centers, cloud, etc.)",
+      "en s'appuyant sur des bases mathématiques",
       'en assurant la cohérence et la qualité',
     ],
     situations: [
@@ -257,7 +243,7 @@ export const COMPETENCES = [
           'Optimiser une base de données, interagir avec une application et mettre en œuvre la sécurité',
         ac: [
           "Optimiser les modèles de données de l'entreprise",
-          'Assurer la confidentialité des données (intégrité et sécurité)',
+          'Assurer la sécurité des données (intégrité et confidentialité)',
           'Organiser la restitution de données à travers la programmation et la visualisation',
           'Manipuler des données hétérogènes',
         ],
@@ -275,7 +261,6 @@ export const COMPETENCES = [
     enonce:
       'Satisfaire les besoins des utilisateurs au regard de la chaîne de valeur du client, organiser et piloter un projet informatique avec des méthodes classiques ou agiles.',
     composantes: [
-      "en identifiant les problématiques du client et les enjeux économiques de l'organisation",
       'en adoptant une démarche proactive, créative et critique',
       'en respectant les règles juridiques et les normes en vigueur',
       "en communiquant efficacement avec les différents acteurs d'un projet",
@@ -322,7 +307,7 @@ export const COMPETENCES = [
     composantes: [
       'en inscrivant sa démarche au sein d\'une équipe pluridisciplinaire',
       'en accompagnant la mise en œuvre des évolutions informatiques',
-      'en veillant au respect des contraintes réglementaires et législatives',
+      'en veillant au respect des contraintes juridiques',
       'en développant une communication efficace et collaborative',
     ],
     situations: [
@@ -356,8 +341,9 @@ export const COMPETENCES = [
         intitule: 'Manager une équipe informatique',
         ac: [
           'Organiser et partager une veille technologique et informationnelle',
-          "Identifier les enjeux de l'économie de l'innovation",
+          "Identifier les enjeux de l'économie de l'innovation numérique",
           "Guider la conduite du changement informatique au sein d'une organisation",
+          'Accompagner le management de projet informatique',
         ],
       },
     ],

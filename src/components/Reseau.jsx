@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { releve, sondeEnTexte, formaterSonde } from '../lib/sondes.js'
-import { identite, etatDuLeve, stations } from '../content/portfolio.js'
+import { identite, stations } from '../content/portfolio.js'
 import { Champ } from './Champ.jsx'
 import { Terminus, Correspondance, Travaux } from './Icones.jsx'
 import { lienLigne } from '../lib/routeur.js'
@@ -92,7 +92,7 @@ export default function Reseau() {
         </p>
       </header>
 
-      {(exemple || !etatDuLeve.valide) && (
+      {exemple && (
         <p
           className="signal"
           style={{
@@ -105,9 +105,7 @@ export default function Reseau() {
           role="status"
         >
           <Travaux />
-          {exemple
-            ? 'Plan de démonstration — les niveaux affichés ne sont pas les tiens'
-            : 'Plan provisoire — auto-évaluation non encore validée'}
+          Plan de démonstration — les niveaux affichés ne sont pas les tiens
         </p>
       )}
 

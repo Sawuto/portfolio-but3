@@ -43,23 +43,3 @@ export const lienLigne = (id) => `${PREFIXE}${id}`
 
 /** Lien vers une ancre de l'accueil, depuis n'importe quelle page. */
 export const lienAccueil = (ancre) => (ancre ? `#${ancre}` : '#')
-
-/**
- * Va sur l'accueil puis défile jusqu'à l'ancre. Utilisé par le mode soutenance,
- * qui doit fonctionner quelle que soit la page affichée.
- */
-export function allerVersAncre(ancre) {
-  if (typeof window === 'undefined') return
-  if (ancre.startsWith('/')) {
-    window.location.hash = `#${ancre}`
-    return
-  }
-  const etaitSurUnePage = window.location.hash.startsWith(PREFIXE)
-  window.location.hash = `#${ancre}`
-  // Si on arrivait d'une page de ligne, la cible n'était pas encore montée :
-  // on laisse un tour de boucle au rendu avant de défiler.
-  const defiler = () =>
-    document.getElementById(ancre)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  if (etaitSurUnePage) requestAnimationFrame(() => requestAnimationFrame(defiler))
-  else defiler()
-}
